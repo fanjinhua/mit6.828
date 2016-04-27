@@ -105,3 +105,32 @@
 - 中断服务处理
 - 清楚中断标记
 - 现场恢复
+
+# bootloader 启动
+## x86启动顺序－第一条指令
+- CS = F000H, EIP = 0000FFF0H
+- 指令的实际地址:
+
+    Base + EIP = FFFF0000H + 0000FFF0H = FFFFFFFFH
+    
+    where is ERPOM of BIOS 
+    
+- 通常第一条指令是一条长跳转指令
+
+## x86启动顺序－处于实模式的段
+
+CS:IP
+
+## x86启动顺序－从BIOS到bootloader
+- BIOS加载存储设备上的第一个*扇区的512字节*（BMR）到内存的0x7c00..
+ 
+ This MBR code is usually referred to as a boot loader
+- 然后跳转到0x7c00的第一条指令开始执行
+
+## x86启动顺序－从bootloader到OS
+－bootloader做的事
+  - 实模式的16位寻址空间切换到保护模式的32位寻址空间，即从1M到4G
+    
+    enable段机制  
+  - 从硬盘上读取kernel并放到内存中固定位置
+  - 跳转到OS的entry　point执行，这时控制权到了OS中
