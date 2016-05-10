@@ -106,6 +106,33 @@
 - 清楚中断标记
 - 现场恢复
 
+## x86中的中断处理－中断源
+- Interrupts
+ - External interrupts,串口，硬盘，网卡，时钟
+ - Software generated interrupts,通常用于系统调用
+- Exceptions
+ - 程序错误
+ - 软件产生的异常
+ - 硬件检查出的异常
+ 
+### x86中的中断处理－确定中断服务例程
+- 每个中断或异常与一个中断服务例程(Interrupt Service Routine, ISR)关联，
+　关联关系存储在中断描述表(Interrupt Descriptor Table, IDT).
+- IDT的起始地址和大小保存在中断描述符表寄存器IDTR中
+
+### x86中的中断处理－切换到ISR
+- 压栈，特权级用到两个stack
+- iter vs. ret vs. retf: iret弹出EFLAGS和SS/ESP,但ret弹出EIP，
+　retf弹出CS和EIP
+
+### x86中的中断处理－系统调用（一种特殊的中断，trap，软中断）
+- 用户程序通过系统调用访问OS内核服务
+- 如何实现
+ - 需要指定中断号
+ - 使用Trap
+ - 或使用特殊指令
+
+
 # bootloader 启动
 ## x86启动顺序－第一条指令
 - CS = F000H, EIP = 0000FFF0H

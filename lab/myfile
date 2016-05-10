@@ -1,0 +1,5 @@
+testprint : testprint.c printf.c
+	gcc -o testprint testprint.c kern/printf.c 
+
+clean :
+	rm testprint 
